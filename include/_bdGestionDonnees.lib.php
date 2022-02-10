@@ -419,7 +419,7 @@ function listerEmprunter()
 {
     $connexion = connecterServeurBD();
    
-    $requete="select vis_matricule, vis_nom, vis_prenom, vis_adresse, vis_cp, vis_ville, vis_dateembauche, sec_code, lab_code from visiteur";
+    $requete="select dateEmprunter, dateRestituer, vis_matricule, idMateriel from emprunter where dateRestituer is not null";
     
     $jeuResultat=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
   
@@ -427,15 +427,33 @@ function listerEmprunter()
     $ligne = $jeuResultat->fetch();
     while($ligne)
     {
+        $fleur[$i]['dateEmprunter']=$ligne['dateEmprunter'];
+        $fleur[$i]['dateRestituer']=$ligne['dateRestituer'];
         $fleur[$i]['vis_matricule']=$ligne['vis_matricule'];
-        $fleur[$i]['vis_nom']=$ligne['vis_nom'];
-        $fleur[$i]['vis_prenom']=$ligne['vis_prenom'];
-        $fleur[$i]['vis_adresse']=$ligne['vis_adresse'];
-        $fleur[$i]['vis_cp']=$ligne['vis_cp'];
-        $fleur[$i]['vis_ville']=$ligne['vis_ville'];
-        $fleur[$i]['vis_dateembauche']=$ligne['vis_dateembauche'];
-        $fleur[$i]['sec_code']=$ligne['sec_code'];
-        $fleur[$i]['lab_code']=$ligne['lab_code'];
+        $fleur[$i]['idMateriel']=$ligne['idMateriel'];
+        $ligne=$jeuResultat->fetch();
+        $i = $i + 1;
+    }
+    $jeuResultat->closeCursor();   // fermer le jeu de r�sultat
+  
+  return $fleur;
+}
+function listerPasRestituer()
+{
+    $connexion = connecterServeurBD();
+   
+    $requete="select dateEmprunter, dateRestituer, vis_matricule, idMateriel from emprunter where dateRestituer is null";
+    
+    $jeuResultat=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
+  
+    $i = 0;
+    $ligne = $jeuResultat->fetch();
+    while($ligne)
+    {
+        $fleur[$i]['dateEmprunter']=$ligne['dateEmprunter'];
+        $fleur[$i]['dateRestituer']=$ligne['dateRestituer'];
+        $fleur[$i]['vis_matricule']=$ligne['vis_matricule'];
+        $fleur[$i]['idMateriel']=$ligne['idMateriel'];
         $ligne=$jeuResultat->fetch();
         $i = $i + 1;
     }
@@ -444,5 +462,62 @@ function listerEmprunter()
   return $fleur;
 }
 
+function ajouterEmprunt($dateEmprunter, $vis_matricule, $idMateriel,&$tabErr)
+{
+  // Ouvrir une connexion au serveur mysql en s'identifiant
+  $connexion = connecterServeurBD();
+    
+  $requete="select * from emprunter";
+  $requete=$requete." where idMateriel = '".$idMateriel."';";   
+  // Cr�er la requ�te d'ajout 
+  $requete="insert into emprunter"
+  ."(dateEmprunter, vis_matricule, idMateriel) values ('"
+  .$dateEmprunter."','"
+  .$vis_matricule."','"
+  .$idMateriel."');";
+  
+  // Lancer la requ�te d'ajout 
+  $ok=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
+  
+  // Si la requ�te a r�ussi
+  if ($ok)
+  {
+    $message = "L'emprunt a �t� correctement ajout�e";
+    ajouterErreur($tabErr, $message);
+    }
+  else
+  {
+    $message = "Attention, l'ajout de l'emprunt a �chou� !!!";
+    ajouterErreur($tabErr, $message);
+  } 
 
+}
+function ajouterRestituer($dateEmprunter, $dateRestituer, $vis_matricule, $idMateriel,&$tabErr)
+{
+  // Ouvrir une connexion au serveur mysql en s'identifiant
+  $connexion = connecterServeurBD();
+  $requete="select dateEmprunter, vis_matricule, idMateriel from emprunter";
+  $requete=$requete." where vis_matricule = '".$vis_matricule."' and dateRestituer is null;";   
+  // Cr�er la requ�te d'ajout 
+  $requete="insert into emprunter"
+  ."(dateRestituer) values ('"
+  .$dateRestituer."');";          
+ 
+  $ok=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
+
+
+  
+  // Si la requ�te a r�ussi
+  if ($ok)
+  {
+    $message = "Le matériel a �t� correctement restituer";
+    ajouterErreur($tabErr, $message);
+    }
+  else
+  {
+    $message = "Attention, la réstitution de l'emprunt a �chou� !!!";
+    ajouterErreur($tabErr, $message);
+  } 
+
+}
 ?>

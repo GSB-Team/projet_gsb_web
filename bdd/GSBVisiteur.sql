@@ -149,11 +149,16 @@ INSERT INTO `visiteur` (`VIS_MATRICULE`, `VIS_NOM`, `VIS_PRENOM`, `VIS_ADRESSE`,
 --
 -- Index pour la table `emprunter`
 --
-ALTER TABLE `emprunter`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `vis_matricule` (`vis_matricule`),
-  ADD KEY `idMateriel` (`idMateriel`);
 
+
+
+
+--
+-- Index pour la table `emprunter`
+--
+ALTER TABLE `emprunter`
+  ADD PRIMARY KEY (`vis_matricule`,`idMateriel`),
+  ADD KEY `idMateriel` (`idMateriel`);
 --
 -- Index pour la table `materiel`
 --

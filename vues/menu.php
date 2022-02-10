@@ -42,8 +42,24 @@ $est=!estConnecte();
               <li class="nav">
                 <a href="rechercher.php">Rechercher</a>
               </li>
-              <li class="nav"><a href="supprimer.php">supprimer</a></li>
-              <li class="nav"><a href="modifier.php">modifier</a></li>
+              <li class="nav">
+                <a href="supprimer.php">supprimer</a>
+              </li>
+                <li class="nav">
+              <a href="modifier.php">modifier</a>
+              </li>
+              <li class="nav">
+                <a href="emprunter.php">Restituer</a>
+              </li>
+              <li class="nav">
+                <a href="RestituerPasMateriel.php">Non restituer</a>
+              </li>
+              <li class="nav">
+                <a href="AjouterEmprunter.php">Ajouter Emprunter</a>
+              </li>
+              <li class="nav">
+                <a href="AjouterRestituer.php">Ajouter Restituer</a>
+              </li>
                         
   <?php
 
