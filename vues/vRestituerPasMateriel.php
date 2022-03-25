@@ -24,14 +24,14 @@
       <tbody>  
 <?php
     $i = 0;
-    while($i < count($lafleur))
+    while($i < count($lemprunt))
     { 
  ?>     
         <tr>
-            <td><?php echo $lafleur[$i]['dateEmprunter']?></td>
-            <td><?php echo $lafleur[$i]["dateRestituer"]?></td>
-            <td ><?php echo $lafleur[$i]["vis_matricule"]?></td>
-            <td><?php echo $lafleur[$i]["idMateriel"]?></td>
+            <td><?php echo $lemprunt[$i]['dateEmprunter']?></td>
+            <td><?php echo $lemprunt[$i]["dateRestituer"]?></td>
+            <td ><?php echo $lemprunt[$i]["vis_matricule"]?></td>
+            <td><?php echo $lemprunt[$i]["idMateriel"]?></td>
           
         </tr>
 <?php

@@ -20,27 +20,22 @@
           <th>Adresse</th>
           <th>code postal</th>
           <th>ville</th>
-          <th>date embauche</th>
-          <th>sec code</th>
-          <th>lab code</th>
+
         </tr>
       </thead>
       <tbody>  
 <?php
     $i = 0;
-    while($i < count($lafleur))
+    while($i < count($levisiteur))
     { 
  ?>     
         <tr>
-            <td ><?php echo $lafleur[$i]['vis_matricule']?></td>
-            <td><?php echo $lafleur[$i]['vis_nom']?></td>
-            <td><?php echo $lafleur[$i]["vis_prenom"]?></td>
-            <td ><?php echo $lafleur[$i]["vis_adresse"]?></td>
-            <td><?php echo $lafleur[$i]["vis_cp"]?></td>
-            <td ><?php echo $lafleur[$i]["vis_ville"]?></td>
-            <td><?php echo $lafleur[$i]["vis_dateembauche"]?></td>
-            <td><?php echo $lafleur[$i]["sec_code"]?></td>
-            <td><?php echo $lafleur[$i]["lab_code"]?></td>
+            <td ><?php echo $levisiteur[$i]['vis_matricule']?></td>
+            <td><?php echo $levisiteur[$i]['vis_nom']?></td>
+            <td><?php echo $levisiteur[$i]["vis_prenom"]?></td>
+            <td ><?php echo $levisiteur[$i]["vis_adresse"]?></td>
+            <td><?php echo $levisiteur[$i]["vis_cp"]?></td>
+            <td ><?php echo $levisiteur[$i]["vis_ville"]?></td>
         </tr>
 <?php
         $i = $i + 1;

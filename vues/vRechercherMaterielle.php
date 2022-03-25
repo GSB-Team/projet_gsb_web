@@ -1,5 +1,5 @@
 
-<--Saisie des informations dans un formulaire!-->
+<!--Saisie des informations dans un formulaire!-->
 <br>
 <br>
 <br>
@@ -9,8 +9,8 @@
 
 <form name="formAjout" action="" method="post" onSubmit="return valider()">
   <fieldset>
-    <legend>Entrez la designation de la fleur recherchee </legend>
-   <label>Designation :</label> <input type="text" name="des" size="20" /><br />
+    <legend>Entrez l'Id du materiel recherchee </legend>
+   <label>Id :</label> <input type="text" name="des" size="20" /><br />
   </fieldset>
   <button type="submit" class="btn btn-primary">Rechercher</button>
   </p>

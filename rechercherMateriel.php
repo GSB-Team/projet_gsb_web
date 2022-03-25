@@ -25,10 +25,10 @@ else
   $etape = 2;
   $uneDes=$_POST["des"];
   
-  $lafleur=rechercherMaterielle($uneDes);
-  if (count($lafleur) == 0)
+  $lemateriel=rechercherMaterielle($uneDes);
+  if (count($lemateriel) == 0)
   {
-    $message = "Aucune fleur n'a �t� trouv�e !";
+    $message = "Aucun materiel n'a �t� trouv�e !";
     ajouterErreur($tabErreurs, $message);
   }
 }

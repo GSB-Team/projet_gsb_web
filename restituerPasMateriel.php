@@ -21,7 +21,7 @@
 
 // DEBUT du contr�leur lister.php
  
-  $lafleur = listerPasRestituer();
+  $lemprunt = listerPasRestituer();
   
   // Construction de la page Lister
   // pour l'affichage (appel des vues)

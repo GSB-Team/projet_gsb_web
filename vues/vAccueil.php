@@ -4,9 +4,12 @@
  
 <div class="jumbotron masthead">
   <div class="container">
-    <h1>Lafleur</h1>
-    <img src="../image/accueil.png" alt="">
+  <br>
+  <br>
+  <br>
+  <br>
+    <h1>Projet GSB WEB</h1>
+    
     <hr>
-    <p>Envoyez des fleurs avec Lafleur.</p>
   </div>
 </div>

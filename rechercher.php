@@ -25,10 +25,10 @@ else
   $etape = 2;
   $uneDes=$_POST["des"];
   
-  $lafleur=rechercher($uneDes);
-  if (count($lafleur) == 0)
+  $levisiteur=rechercher($uneDes);
+  if (count($levisiteur) == 0)
   {
-    $message = "Aucune fleur n'a �t� trouv�e !";
+    $message = "Aucun visiteur n'a �t� trouv�e !";
     ajouterErreur($tabErreurs, $message);
   }
 }

@@ -21,13 +21,12 @@
 
 // DEBUT du contr�leur lister.php
  
-  $lemprunt = listerEmprunter();
+  $lemprunt = listerMaterielDisponible();
   
   // Construction de la page Lister
   // pour l'affichage (appel des vues)
   include($repVues."entete.php") ;
   include($repVues."menu.php") ;
-  include($repVues."vEmprunter.php");
+  include($repVues."vListerMaterielDisponible.php");
   include($repVues."pied.php") ;
   ?>
-    

@@ -4,7 +4,7 @@
     <input type="hidden" name="etape" value="3" />
 
     <fieldset>
-      <legend>Entrez les donn�es sur la fleur � modifier </legend>
+      <legend>Entrez les données du visiteur à modifier </legend>
       <label> Matricule :</label>
       <input type="text" name="ref"  /><br />
       <label> Nom :</label>
@@ -17,10 +17,7 @@
       <input type="text" name="cp"  /><br />
       <label>Ville :</label>
       <input type="text" name="ville" /><br />
-      <label>Sec_code :</label>
-      <input type="text" name="sec_code" /><br />
-      <label>Lab_code :</label>
-      <input type="text" name="lab_code" /><br />
+      
     </fieldset>
     <button type="submit" class="btn btn-primary">Modifier</button>
     <button type="reset" class="btn">Annuler</button>

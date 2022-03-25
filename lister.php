@@ -1,27 +1,27 @@
 <?php
 /** 
- * Script de contrôle et d'affichage du cas d'utilisation "Rechercher"
+ * Script de contrï¿½le et d'affichage du cas d'utilisation "Rechercher"
  * @package default
  * @todo  RAS
  */
  
-// Initialise les ressources nécessaires au fonctionnement de l'application
+// Initialise les ressources nï¿½cessaires au fonctionnement de l'application
 
   $repVues = './vues/';
   require("./include/_bdGestionDonnees.lib.php");
   require("./include/_gestionSession.lib.php");
   require("./include/_utilitairesEtGestionErreurs.lib.php");
   
-  // démarrage ou reprise de la session
+  // dï¿½marrage ou reprise de la session
   initSession();
   
   // initialement, aucune erreur ...
   $tabErreurs = array();
     
 
-// DEBUT du contrôleur lister.php
+// DEBUT du contrï¿½leur lister.php
  
-  $lafleur = lister();
+  $levisiteur = lister();
   
   // Construction de la page Lister
   // pour l'affichage (appel des vues)

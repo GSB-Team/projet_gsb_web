@@ -1,5 +1,4 @@
-
-  <!-- Vue pour lister les fleurs
+<!-- Vue pour lister les fleurs
     ================================================== -->
     <br>
 <br>
@@ -14,10 +13,10 @@
       <br>
       <thead>
         <tr>
-          <th>dateEmprunter</th>
-          <th>dateRestituer</th>
-          <th>vis_matricule</th>
-          <th>idMateriel </th>
+          <th>Id</th>
+          <th>Marque</th>
+          <th>Modele</th>
+          <th>Dimension</th>
      
         </tr>
       </thead>
@@ -28,10 +27,10 @@
     { 
  ?>     
         <tr>
-            <td><?php echo $lemprunt[$i]['dateEmprunter']?></td>
-            <td><?php echo $lemprunt[$i]["dateRestituer"]?></td>
-            <td ><?php echo $lemprunt[$i]["vis_matricule"]?></td>
-            <td><?php echo $lemprunt[$i]["idMateriel"]?></td>
+            <td><?php echo $lemprunt[$i]['Id']?></td>
+            <td><?php echo $lemprunt[$i]["Marque"]?></td>
+            <td ><?php echo $lemprunt[$i]["Modele"]?></td>
+            <td ><?php echo $lemprunt[$i]["Dimension"]?></td>
           
         </tr>
 <?php
@@ -41,5 +40,3 @@
        </tbody>       
      </table>    
   </div>
-
- 

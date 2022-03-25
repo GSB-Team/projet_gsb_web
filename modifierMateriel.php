@@ -36,7 +36,7 @@ else
     if (nbErreurs($tabErreurs)==0)
     {
       $reussite = 1;
-      $messageActionOk = "La fleur a �t� correctement modifi�e";
+      $messageActionOk = "Le materiel a �t� correctement modifi�e";
     }
   
 }

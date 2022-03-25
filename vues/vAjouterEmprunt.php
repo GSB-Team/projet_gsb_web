@@ -15,7 +15,7 @@
 
 <form name="formAjout" action="" method="post">
   <fieldset>
-    <legend>Entrez les donnees sur la fleur à ajouter </legend>
+    <legend>Entrez les donnees sur l'emprunt à ajouter </legend>
     <label> dateEmpunter : </label> <input type="text" name="dateEmprunter" /><br />
     <label>vis_matricule:</label> <input type="text" name="vis_matricule" /><br />
     <label>idMateriel:</label> <input type="text" name="idMateriel" /><br />

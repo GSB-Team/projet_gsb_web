@@ -23,14 +23,14 @@
       <tbody>  
 <?php
     $i = 0;
-    while($i < count($lafleur))
+    while($i < count($lemateriel))
     { 
  ?>     
         <tr>
-            <td ><?php echo $lafleur[$i]['Id']?></td>
-            <td><?php echo $lafleur[$i]['Marque']?></td>
-            <td><?php echo $lafleur[$i]["Dimension"]?></td>
-            <td ><?php echo $lafleur[$i]["Modele"]?></td>
+            <td ><?php echo $lemateriel[$i]['Id']?></td>
+            <td><?php echo $lemateriel[$i]['Marque']?></td>
+            <td><?php echo $lemateriel[$i]["Dimension"]?></td>
+            <td ><?php echo $lemateriel[$i]["Modele"]?></td>
         </tr>
 <?php
         $i = $i + 1;

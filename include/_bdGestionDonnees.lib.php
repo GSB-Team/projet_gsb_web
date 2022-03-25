@@ -29,7 +29,7 @@ function lister()
 {
     $connexion = connecterServeurBD();
    
-    $requete="select vis_matricule, vis_nom, vis_prenom, vis_adresse, vis_cp, vis_ville, vis_dateembauche, sec_code, lab_code from visiteur";
+    $requete="select vis_matricule, vis_nom, vis_prenom, vis_adresse, vis_cp, vis_ville from visiteur";
     
     $jeuResultat=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
   
@@ -37,21 +37,19 @@ function lister()
     $ligne = $jeuResultat->fetch();
     while($ligne)
     {
-        $fleur[$i]['vis_matricule']=$ligne['vis_matricule'];
-        $fleur[$i]['vis_nom']=$ligne['vis_nom'];
-        $fleur[$i]['vis_prenom']=$ligne['vis_prenom'];
-        $fleur[$i]['vis_adresse']=$ligne['vis_adresse'];
-        $fleur[$i]['vis_cp']=$ligne['vis_cp'];
-        $fleur[$i]['vis_ville']=$ligne['vis_ville'];
-        $fleur[$i]['vis_dateembauche']=$ligne['vis_dateembauche'];
-        $fleur[$i]['sec_code']=$ligne['sec_code'];
-        $fleur[$i]['lab_code']=$ligne['lab_code'];
+        $visiteur[$i]['vis_matricule']=$ligne['vis_matricule'];
+        $visiteur[$i]['vis_nom']=$ligne['vis_nom'];
+        $visiteur[$i]['vis_prenom']=$ligne['vis_prenom'];
+        $visiteur[$i]['vis_adresse']=$ligne['vis_adresse'];
+        $visiteur[$i]['vis_cp']=$ligne['vis_cp'];
+        $visiteur[$i]['vis_ville']=$ligne['vis_ville'];
+
         $ligne=$jeuResultat->fetch();
         $i = $i + 1;
     }
     $jeuResultat->closeCursor();   // fermer le jeu de r�sultat
   
-  return $fleur;
+  return $visiteur;
 }
 
 function listerMaterielle()
@@ -66,16 +64,16 @@ function listerMaterielle()
     $ligne = $jeuResultat->fetch();
     while($ligne)
     {
-        $fleur[$i]['Id']=$ligne['Id'];
-        $fleur[$i]['Marque']=$ligne['Marque'];
-        $fleur[$i]['Dimension']=$ligne['Dimension'];
-        $fleur[$i]['Modele']=$ligne['Modele'];
+        $materiel[$i]['Id']=$ligne['Id'];
+        $materiel[$i]['Marque']=$ligne['Marque'];
+        $materiel[$i]['Dimension']=$ligne['Dimension'];
+        $materiel[$i]['Modele']=$ligne['Modele'];
         $ligne=$jeuResultat->fetch();
         $i = $i + 1;
     }
     $jeuResultat->closeCursor();   // fermer le jeu de r�sultat
   
-  return $fleur;
+  return $materiel;
 }
 
 function ajouterMaterielle($ref, $marque, $dimension, $modele,&$tabErr)
@@ -97,83 +95,128 @@ function ajouterMaterielle($ref, $marque, $dimension, $modele,&$tabErr)
   // Si la requ�te a r�ussi
   if ($ok)
   {
-    $message = "La fleur a �t� correctement ajout�e";
+    $message = "Le materiel a �t� correctement ajout�e";
     ajouterErreur($tabErr, $message);
     }
   else
   {
-    $message = "Attention, l'ajout de la fleur a �chou� !!!";
+    $message = "Attention, l'ajout du materiel a �chou� !!!";
     ajouterErreur($tabErr, $message);
   } 
 
 }
                                                                   
-function ajouterVisi($id, $nom, $mdp, $role, &$tabErr)
+function ajouterVisi2($id, $nom, $prenom, $mdp, $mdp1, $role, $mail, &$tabErr)
+{
+  // Ouvrir une connexion au serveur mysql en s'identifiant
+
+  $connexion = connecterServeurBD();
+    
+  if($mdp != $mdp1)
+  {
+    $message = "les deux mots de passe sont different";
+    ajouterErreur($tabErr, $message);
+  }
+  else
+  { if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+    // Cr�er la requ�te d'ajout 
+    $requete="insert into visiteur"
+    ."(`VIS_MATRICULE`, `VIS_NOM`,`VIS_PRENOM`,`mdp`, `mdp1`, `role`, `adresseMail`) values ('"
+    .$id."','"
+    .$nom."','"
+    .$prenom."','"
+    .$mdp."','"
+    .$mdp1."','"
+    .$role."','"
+    .$mail."');";
+
+   
+  
+  
+
+  // Lancer la requ�te d'ajout 
+  $ok=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
+  
+  // Si la requ�te a r�ussi
+  if ($ok)
+  {
+    $requete="select `VIS_MATRICULE`, `VIS_NOM`,`VIS_PRENOM`,`mdp`, `mdp1`, `role`, `adresseMail` from visiteur";
+  $requete=$requete." where `adresseMail` like '%@%' and `mdp`= `mdp1`;";   
+        $ok=$connexion->query($requete);
+        $message = "L'utilisateur a �t� correctement ajout�e";
+        ajouterErreur($tabErr, $message);
+    }}
+    else{
+     
+        $message = "Attention, l'ajout de l'utilisateur a �chou� !!!";
+        ajouterErreur($tabErr, $message);
+      
+    }
+  
+ 
+  }
+
+}
+
+function inscription1($id, $nom, $prenom, $adresse, $cp, $ville, $mail, $role, $mdp, $mdp1, &$tabErr)
 {
   // Ouvrir une connexion au serveur mysql en s'identifiant
   $connexion = connecterServeurBD();
-  
-  // Si la connexion au SGBD � r�ussi
-  if (TRUE) 
-  {
     
-    // V�rifier que la r�f�rence saisie n'existe pas d�ja
-    $requete="select * from visiteur";
-    $requete=$requete." where idVisiteur = '".$id."';"; 
-    $jeuResultat=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
-
-    $jeuResultat->setFetchMode(PDO::FETCH_OBJ); // on dit qu'on veut que le r�sultat soit r�cup�rable sous forme d'objet     
-    
-    $ligne = $jeuResultat->fetch();
-    if($ligne)
-    {
-      $message="Echec de l'ajout : l'ID existe déjà !";
-      ajouterErreur($tabErr, $message);
-    }
-    else
-    {
-      // Cr�er la requ�te d'ajout 
-       $requete="insert into visiteur"
-       ."(idVisiteur,nomVisiteur,mdpVisiteur,roleVisiteur) values ('"
-       .$id."','"
-       .$nom."',"
-       .$mdp."','"
-       .$role."');";
-       
-        // Lancer la requète d'ajout 
-        $ok=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
-       
-        // Si la requ�te a r�ussi
-        if ($ok)
-        {
-          $message = "Le Visiteur a été correctement ajoutée";
-          ajouterErreur($tabErr, $message);
-        }
-        else
-        {
-          $message = "Attention, l'ajout du visiteur a échoué !!!";
-          ajouterErreur($tabErr, $message);
-        } 
-
-    }
-    // fermer la connexion
-    // deconnecterServeurBD($idConnexion);
-  }
-  else
+  if($mdp != $mdp1)
   {
-    $message = "Problème à la connexion <br />";
+    $message = "les deux mots de passe sont different";
     ajouterErreur($tabErr, $message);
   }
+  else
+  { if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+    // Cr�er la requ�te d'ajout 
+  $requete="insert into visiteur"
+  ."(`VIS_MATRICULE`, `VIS_NOM`,`VIS_PRENOM`, `VIS_ADRESSE`, `VIS_CP`, `VIS_VILLE`, `adresseMail`, `role`, `mdp`, `mdp1`) values ('"
+  .$id."','"
+  .$nom."','"
+  .$prenom."','"
+  .$adresse."','"
+  .$cp."','"
+  .$ville."','"
+  .$mail."','"
+  .$role."','"
+  .$mdp."','"
+  .$mdp1."');";
+
+   
+  
+  
+
+  // Lancer la requ�te d'ajout 
+  $ok=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
+  
+  // Si la requ�te a r�ussi
+  if ($ok)
+  {
+    $requete="select `VIS_MATRICULE`, `VIS_NOM`,`VIS_PRENOM`, `VIS_ADRESSE`, `VIS_CP`, `VIS_VILLE`,`adresseMail`, `role`, `mdp`, `mdp1` from visiteur";
+    $requete=$requete." where `adresseMail` like '%@%' and `mdp`= `mdp1`;";    
+        $ok=$connexion->query($requete);
+        $message = "L'utilisateur a �t� correctement ajout�e";
+        ajouterErreur($tabErr, $message);
+    }}
+    else{
+     
+        $message = "Attention, l'ajout de l'utilisateur a �chou� !!!";
+        ajouterErreur($tabErr, $message);
+      
+    }
+  
+ 
+  }
 }
-
-
 function rechercher($des)
 {
     $connexion = connecterServeurBD();
     
-    $fleur = array();
+    $visiteur = array();
    
-    $requete="select vis_matricule, vis_nom, vis_prenom, vis_adresse, vis_cp, vis_ville, vis_dateembauche, sec_code, lab_code from visiteur";
+    $requete="select vis_matricule, vis_nom, vis_prenom, vis_adresse, vis_cp, vis_ville from visiteur";
       $requete=$requete." where vis_nom='".$des."';";
     
     $jeuResultat=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
@@ -182,30 +225,28 @@ function rechercher($des)
     $ligne = $jeuResultat->fetch();
     while($ligne)
     {
-      $fleur[$i]['vis_matricule']=$ligne['vis_matricule'];
-      $fleur[$i]['vis_nom']=$ligne['vis_nom'];
-      $fleur[$i]['vis_prenom']=$ligne['vis_prenom'];
-      $fleur[$i]['vis_adresse']=$ligne['vis_adresse'];
-      $fleur[$i]['vis_cp']=$ligne['vis_cp'];
-      $fleur[$i]['vis_ville']=$ligne['vis_ville'];
-      $fleur[$i]['vis_dateembauche']=$ligne['vis_dateembauche'];
-      $fleur[$i]['sec_code']=$ligne['sec_code'];
-      $fleur[$i]['lab_code']=$ligne['lab_code'];;
+      $visiteur[$i]['vis_matricule']=$ligne['vis_matricule'];
+      $visiteur[$i]['vis_nom']=$ligne['vis_nom'];
+      $visiteur[$i]['vis_prenom']=$ligne['vis_prenom'];
+      $visiteur[$i]['vis_adresse']=$ligne['vis_adresse'];
+      $visiteur[$i]['vis_cp']=$ligne['vis_cp'];
+      $visiteur[$i]['vis_ville']=$ligne['vis_ville'];
+
         $ligne=$jeuResultat->fetch();
         $i = $i + 1;
     }
     $jeuResultat->closeCursor();   // fermer le jeu de r�sultat
   
-  return $fleur;
+  return $visiteur;
 }
 function rechercherMaterielle($des)
 {
     $connexion = connecterServeurBD();
     
-    $fleur = array();
+    $materiel = array();
    
     $requete="select Id, Marque, Dimension, Modele from materiel";
-      $requete=$requete." where Modele='".$des."';";
+      $requete=$requete." where Id='".$des."';";
     
     $jeuResultat=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
   
@@ -213,23 +254,23 @@ function rechercherMaterielle($des)
     $ligne = $jeuResultat->fetch();
     while($ligne)
     {
-      $fleur[$i]['Id']=$ligne['Id'];
-        $fleur[$i]['Marque']=$ligne['Marque'];
-        $fleur[$i]['Dimension']=$ligne['Dimension'];
-        $fleur[$i]['Modele']=$ligne['Modele'];
+      $materiel[$i]['Id']=$ligne['Id'];
+        $materiel[$i]['Marque']=$ligne['Marque'];
+        $materiel[$i]['Dimension']=$ligne['Dimension'];
+        $materiel[$i]['Modele']=$ligne['Modele'];
         $ligne=$jeuResultat->fetch();
         $i = $i + 1;
     }
     $jeuResultat->closeCursor();   // fermer le jeu de r�sultat
   
-  return $fleur;
+  return $materiel;
 }
 
 function supprimer($ref, &$tabErr)
 {
     $connexion = connecterServeurBD();
     
-    $fleur = array();
+    $visiteur = array();
           
     $requete="delete from visiteur";
     $requete=$requete." where vis_matricule='".$ref."';";
@@ -240,12 +281,12 @@ function supprimer($ref, &$tabErr)
     // Si la requ�te a r�ussi
     if ($ok)
     {
-      $message = "La fleur a �t� correctement supprim�e";
+      $message = "Le visiteur a �t� correctement supprim�e";
       ajouterErreur($tabErr, $message);
     }
     else
     {
-      $message = "Attention, la suppression de la fleur a �chou� !!!";
+      $message = "Attention, la suppression du visiteur a �chou� !!!";
       ajouterErreur($tabErr, $message);
     }      
 }
@@ -254,7 +295,7 @@ function supprimerMaterielle($ref, &$tabErr)
 {
     $connexion = connecterServeurBD();
     
-    $fleur = array();
+    $materiel = array();
           
     $requete="delete from materiel";
     $requete=$requete." where id='".$ref."';";
@@ -265,55 +306,20 @@ function supprimerMaterielle($ref, &$tabErr)
     // Si la requ�te a r�ussi
     if ($ok)
     {
-      $message = "La fleur a �t� correctement supprim�e";
+      $message = "Le materiel a �t� correctement supprim�e";
       ajouterErreur($tabErr, $message);
     }
     else
     {
-      $message = "Attention, la suppression de la fleur a �chou� !!!";
+      $message = "Attention, la suppression du materiel a �chou� !!!";
       ajouterErreur($tabErr, $message);
     }      
 }
 
-function inscription($unNom, $unMdp, $unMdpConf, $uneCat, &$tabErr)
-{
-  // Ouvrir une connexion au serveur mysql en s'identifiant
-  $connexion = connecterServeurBD();
-    if($unMdp != $unMdpConf)
-    {
-      $message = "les deux mots de passe sont different";
-      ajouterErreur($tabErr, $message);
-    }
-    else
-    {
-       // Cr�er la requ�te d'ajout 
-      $requete="insert into utilisateur"
-      ."(nom,mdp,cat) values ('"
-      .$unNom."','"
-      .$unMdp."','"
-      .$uneCat."');";
-  
-      // Lancer la requ�te d'ajout 
-      $ok=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
-  
-  // Si la requ�te a r�ussi
-      if ($ok)
-      {
-       $message = "L'utilisateur a �t� correctement ajout�e";
-       ajouterErreur($tabErr, $message);
-       }
-      else
-      {
-       $message = "Attention, l'ajout de l'utilisateur a �chou� !!!";
-        ajouterErreur($tabErr, $message);
-      } 
-    }
- 
-
-}
 
 
-function modifier($ref, $nom, $prenom, $adresse, $cp, $ville, $sec_code, $lab_code,&$tabErr)
+
+function modifier($ref, $nom, $prenom, $adresse, $cp, $ville,&$tabErr)
 {
   
     // Ouvrir une connexion au serveur mysql en s'identifiant
@@ -334,9 +340,7 @@ function modifier($ref, $nom, $prenom, $adresse, $cp, $ville, $sec_code, $lab_co
     `vis_nom` = '$nom',
     `vis_prenom` = '$prenom',
     `vis_cp` = '$cp',
-    `vis_ville` = '$ville',
-    `sec_code`= '$sec_code',
-    `lab_code` = '$lab_code' WHERE `vis_matricule`='$ref';";
+    `vis_ville` = '$ville' WHERE `vis_matricule`='$ref';";
          
     // Lancer la requ�te d'ajout 
     $ok=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
@@ -344,12 +348,12 @@ function modifier($ref, $nom, $prenom, $adresse, $cp, $ville, $sec_code, $lab_co
     // Si la requ�te a r�ussi
     if ($ok)
     {
-      $message = "La fleur a �t� correctement modifi�";
+      $message = "Le visiteur a �t� correctement modifi�";
       ajouterErreur($tabErr, $message);
     }
     else
     {
-      $message = "Attention, la modification de la fleur a �chou� !!!";
+      $message = "Attention, la modification du visiteur a �chou� !!!";
       ajouterErreur($tabErr, $message);
     } 
 }
@@ -382,39 +386,39 @@ function modifierMaterielle($ref, $marque, $dimension, $modele,&$tabErr)
     // Si la requ�te a r�ussi
     if ($ok)
     {
-      $message = "La fleur a �t� correctement modifi�";
+      $message = "Le materiel a �t� correctement modifi�";
       ajouterErreur($tabErr, $message);
     }
     else
     {
-      $message = "Attention, la modification de la fleur a �chou� !!!";
+      $message = "Attention, la modification du materiel a �chou� !!!";
       ajouterErreur($tabErr, $message);
     } 
 }
 
 
-function rechercherUtilisateur($log, $psw, &$tabErr)
-{
-    $connexion = connecterServeurBD();
+// function rechercherUtilisateur($log, $psw, &$tabErr)
+// {
+//     $connexion = connecterServeurBD();
       
-    $requete="select * from utilisateur";
-      $requete=$requete." where nom='".$log."' and mdp ='".$psw."';";
-    $jeuResultat=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
+//     $requete="select * from visiteur";
+//     $requete=$requete." where nom='".$log."' and mdp ='".$psw."';";
+//     $jeuResultat=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
   
-    // Initialisationd e la cat�gorie trouv�e � : "aucune"
-    $cat = "nulle";
+//     // Initialisationd e la cat�gorie trouv�e � : "aucune"
+//     $cat = "nulle";
     
-    $ligne = $jeuResultat->fetch();
+//     $ligne = $jeuResultat->fetch();
     
-    // Si un utilisateur est trouv�, on initialise une variable cat avec la cat�gorie de cet utilisateur trouv�e dans la table utilisateur
-    if ($ligne)
-    {
-        $cat = $ligne['cat'];
-    }
-    $jeuResultat->closeCursor();   // fermer le jeu de r�sultat
+//     // Si un utilisateur est trouv�, on initialise une variable cat avec la cat�gorie de cet utilisateur trouv�e dans la table utilisateur
+//     if ($ligne)
+//     {
+//         $cat = $ligne['cat'];
+//     }
+//     $jeuResultat->closeCursor();   // fermer le jeu de r�sultat
   
-  return $cat;
-}
+//   return $cat;
+// }
 function listerEmprunter()
 {
     $connexion = connecterServeurBD();
@@ -427,39 +431,40 @@ function listerEmprunter()
     $ligne = $jeuResultat->fetch();
     while($ligne)
     {
-        $fleur[$i]['dateEmprunter']=$ligne['dateEmprunter'];
-        $fleur[$i]['dateRestituer']=$ligne['dateRestituer'];
-        $fleur[$i]['vis_matricule']=$ligne['vis_matricule'];
-        $fleur[$i]['idMateriel']=$ligne['idMateriel'];
+        $emprunt[$i]['dateEmprunter']=$ligne['dateEmprunter'];
+        $emprunt[$i]['dateRestituer']=$ligne['dateRestituer'];
+        $emprunt[$i]['vis_matricule']=$ligne['vis_matricule'];
+        $emprunt[$i]['idMateriel']=$ligne['idMateriel'];
         $ligne=$jeuResultat->fetch();
         $i = $i + 1;
     }
     $jeuResultat->closeCursor();   // fermer le jeu de r�sultat
   
-  return $fleur;
+  return $emprunt;
 }
+
 function listerPasRestituer()
 {
     $connexion = connecterServeurBD();
    
     $requete="select dateEmprunter, dateRestituer, vis_matricule, idMateriel from emprunter where dateRestituer is null";
     
-    $jeuResultat=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
+    $jeuResultat=$connexion->query($requete); 
   
     $i = 0;
     $ligne = $jeuResultat->fetch();
     while($ligne)
     {
-        $fleur[$i]['dateEmprunter']=$ligne['dateEmprunter'];
-        $fleur[$i]['dateRestituer']=$ligne['dateRestituer'];
-        $fleur[$i]['vis_matricule']=$ligne['vis_matricule'];
-        $fleur[$i]['idMateriel']=$ligne['idMateriel'];
+        $emprunt[$i]['dateEmprunter']=$ligne['dateEmprunter'];
+        $emprunt[$i]['dateRestituer']=$ligne['dateRestituer'];
+        $emprunt[$i]['vis_matricule']=$ligne['vis_matricule'];
+        $emprunt[$i]['idMateriel']=$ligne['idMateriel'];
         $ligne=$jeuResultat->fetch();
         $i = $i + 1;
     }
-    $jeuResultat->closeCursor();   // fermer le jeu de r�sultat
+    $jeuResultat->closeCursor();   
   
-  return $fleur;
+  return $emprunt;
 }
 
 function ajouterEmprunt($dateEmprunter, $vis_matricule, $idMateriel,&$tabErr)
@@ -467,23 +472,26 @@ function ajouterEmprunt($dateEmprunter, $vis_matricule, $idMateriel,&$tabErr)
   // Ouvrir une connexion au serveur mysql en s'identifiant
   $connexion = connecterServeurBD();
     
-  $requete="select * from emprunter";
-  $requete=$requete." where idMateriel = '".$idMateriel."';";   
+  $requete="select dateEmprunter, vis_matricule, idMateriel from emprunter";
+  $requete=$requete." where idMateriel = '".$idMateriel."' and dateRestituer is not null;";   
   // Cr�er la requ�te d'ajout 
-  $requete="insert into emprunter"
-  ."(dateEmprunter, vis_matricule, idMateriel) values ('"
-  .$dateEmprunter."','"
-  .$vis_matricule."','"
-  .$idMateriel."');";
+  
   
   // Lancer la requ�te d'ajout 
   $ok=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
   
   // Si la requ�te a r�ussi
-  if ($ok)
+  if ($ok<=1)
   {
-    $message = "L'emprunt a �t� correctement ajout�e";
-    ajouterErreur($tabErr, $message);
+        $requete="insert into emprunter"
+        ."(dateEmprunter, vis_matricule, idMateriel) values ('"
+        .$dateEmprunter."','"
+        .$vis_matricule."','"
+        .$idMateriel."');";
+        $ok=$connexion->query($requete);
+        
+        $message = "L'emprunt a �t� correctement ajout�e";
+        ajouterErreur($tabErr, $message);
     }
   else
   {
@@ -492,23 +500,25 @@ function ajouterEmprunt($dateEmprunter, $vis_matricule, $idMateriel,&$tabErr)
   } 
 
 }
-function ajouterRestituer($dateEmprunter, $dateRestituer, $vis_matricule, $idMateriel,&$tabErr)
+
+function ajouterRestituer( $dateRestituer, $vis_matricule, $idMateriel,&$tabErr)
 {
-  // Ouvrir une connexion au serveur mysql en s'identifiant
+  
   $connexion = connecterServeurBD();
-  $requete="select dateEmprunter, vis_matricule, idMateriel from emprunter";
-  $requete=$requete." where vis_matricule = '".$vis_matricule."' and dateRestituer is null;";   
+  $requete="select vis_matricule, idMateriel from emprunter";
+  $requete=$requete." where vis_matricule = '".$vis_matricule."' and idMateriel = '".$idMateriel."' and dateRestituer is null;";   
   // Cr�er la requ�te d'ajout 
-  $requete="insert into emprunter"
-  ."(dateRestituer) values ('"
-  .$dateRestituer."');";          
+  $requete="update emprunter"
+  ." set dateRestituer ='".$dateRestituer."'
+  where idMateriel = '".$idMateriel."'
+  and vis_matricule = '".$vis_matricule."';";          
  
   $ok=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
 
 
   
   // Si la requ�te a r�ussi
-  if ($ok)
+  if ($ok>=1)
   {
     $message = "Le matériel a �t� correctement restituer";
     ajouterErreur($tabErr, $message);
@@ -520,4 +530,137 @@ function ajouterRestituer($dateEmprunter, $dateRestituer, $vis_matricule, $idMat
   } 
 
 }
+
+function listerMaterielDisponible()
+{
+    $connexion = connecterServeurBD();
+   
+    $requete="SELECT `Id`, `Marque`, `Modele`, `Dimension` FROM materiel WHERE Id not in (SELECT emprunter.idMateriel from emprunter where emprunter.dateRestituer is null)";
+    
+    $jeuResultat=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
+  
+    $i = 0;
+    $ligne = $jeuResultat->fetch();
+    while($ligne)
+    {
+        $emprunt[$i]['Id']=$ligne['Id'];
+        $emprunt[$i]['Marque']=$ligne['Marque'];
+        $emprunt[$i]['Modele']=$ligne['Modele'];
+        $emprunt[$i]['Dimension']=$ligne['Dimension'];
+        $ligne=$jeuResultat->fetch();
+        $i = $i + 1;
+    }
+    $jeuResultat->closeCursor();   // fermer le jeu de r�sultat
+  
+  return $emprunt;
+}
+
+// function inscription($unNom, $unMdp, $unMdpConf, &$tabErr)
+// {
+//   // Ouvrir une connexion au serveur mysql en s'identifiant
+//   $connexion = connecterServeurBD();
+//     if($unMdp != $unMdpConf)
+//     {
+//       $message = "les deux mots de passe sont different";
+//       ajouterErreur($tabErr, $message);
+//     }
+//     else
+//     {
+//        // Cr�er la requ�te d'ajout 
+//       $requete="insert into visiteur"
+//       ."(adresseMail,mdp) values ('"
+//       .$unNom."','"
+//       .$unMdp."');";
+  
+//       // Lancer la requ�te d'ajout 
+//       $ok=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
+  
+//   // Si la requ�te a r�ussi
+//       if ($ok)
+//       {
+//        $message = "L'utilisateur a �t� correctement ajout�e";
+//        ajouterErreur($tabErr, $message);
+//        }
+//       else
+//       {
+//        $message = "Attention, l'ajout de l'utilisateur a �chou� !!!";
+//         ajouterErreur($tabErr, $message);
+//       } 
+//     }
+ 
+
+// }
+
+// function rechercherVisiteur($log, $psw, &$tabErr)
+// {
+//     $connexion = connecterServeurBD();
+      
+//     $requete="select * from visiteur";
+//       $requete=$requete." where adresseMail='".$log."' and mdp ='".$psw."';";
+//       $jeuResultat=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
+  
+//     $i = 0;
+//     $ligne = $jeuResultat->fetch();
+//     while($ligne)
+//     {
+//         $visiteur[$i]['adresseMail']=$ligne['adresseMail'];
+//         $visiteur[$i]['mdp']=$ligne['mdp'];
+
+//         $ligne=$jeuResultat->fetch();
+//         $i = $i + 1;
+//     }
+//     $jeuResultat->closeCursor();   // fermer le jeu de r�sultat
+  
+//   return $visiteur;
+// }
+
+
+
+// function connection($id,$mdp, &$tabErr)
+// {
+//   $connexion = connecterServeurBD();
+//   $fleur = array();
+   
+//   $requete="select VIS_MATRICULE, mdp from visiteur";
+//     $requete=$requete." where VIS_MATRICULE='".$id."'and mdp='".$mdp."';";
+  
+//   $jeuResultat=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
+
+//   $i = 0;
+//   $ligne = $jeuResultat->fetch();
+//   while($ligne)
+//   {
+//     $fleur[$i]['VIS_MATRICULE']=$ligne['VIS_MATRICULE'];
+//       $fleur[$i]['mdp']=$ligne['mdp'];
+//       $ligne=$jeuResultat->fetch();
+//       $i = $i + 1;
+//   }
+//   $jeuResultat->closeCursor();   // fermer le jeu de r�sultat
+
+// return $fleur;
+
+// }
+function rechercherUtilisateur($mail, $mdp, &$tabErr)
+{
+    $connexion = connecterServeurBD();
+      
+    $requete="select * from visiteur";
+      $requete=$requete." where adresseMail='".$mail."' and mdp='".$mdp."';";
+    $jeuResultat=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
+  
+    // Initialisationd e la cat�gorie trouv�e � : "aucune"
+    $cat = "nulle";
+    
+    $ligne = $jeuResultat->fetch();
+    
+    // Si un utilisateur est trouv�, on initialise une variable cat avec la cat�gorie de cet utilisateur trouv�e dans la table utilisateur
+    if ($ligne)
+    {
+        $cat = $ligne['role'];
+    }
+    $jeuResultat->closeCursor();   // fermer le jeu de r�sultat
+  
+  return $cat;
+}
+
 ?>

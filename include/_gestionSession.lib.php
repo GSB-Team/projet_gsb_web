@@ -24,10 +24,10 @@ function initSession() {
  * @param string $cat du visiteur
  * @return void    
  */
-function connecter($nom, $mdp, $cat) {
-    $_SESSION["nom"] = $nom;
+function connecter($mail, $mdp, $cat) {
+    $_SESSION["adresseMail"] = $mail;
     $_SESSION["mdp"] = $mdp;
-    $_SESSION["cat"] = $cat;
+    $_SESSION["role"] = $cat;
     
 }
 
@@ -37,9 +37,9 @@ function connecter($nom, $mdp, $cat) {
  * @return void
  */
 function deconnecter() {
-    unset($_SESSION["nom"]);
+    unset($_SESSION["adresseMail"]);
     unset($_SESSION["mdp"]);
-    unset($_SESSION["cat"]);
+    unset($_SESSION["role"]);
 }
 
 /** 
@@ -50,7 +50,7 @@ function deconnecter() {
  */
 function estConnecte() {
     // actuellement il n'y a que les visiteurs qui se connectent
-    return isset($_SESSION["nom"]);
+    return isset($_SESSION["adresseMail"]);
 }
 
 /** 
@@ -62,9 +62,9 @@ function estConnecte() {
 function estVisiteurConnecte() 
 {
     $connecte = false;
-    if (isset($_SESSION["nom"]))
+    if (isset($_SESSION["adresseMail"]))
     {
-        if ($_SESSION["cat"]=="client")
+        if ($_SESSION["role"]=="visiteur")
         {
            $connecte = true; 
         }
@@ -82,16 +82,13 @@ function estVisiteurConnecte()
 function estAdministrateurConnecte() 
 {
     $connecte = false;
-    if (isset($_SESSION["nom"]))
+    if (isset($_SESSION["adresseMail"]))
     {
-        if ($_SESSION["cat"]=="admin")
+        if ($_SESSION["role"]=="admin")
         {
            $connecte = true; 
         }
     }    
     return $connecte;
 }
-
-
-
 ?>

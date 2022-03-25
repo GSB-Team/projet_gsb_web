@@ -33,14 +33,13 @@ else
     $uneAdresse=$_POST["adresse"];
     $uneCP=$_POST["cp"];
     $uneville=$_POST["ville"];
-    $unsec_code=$_POST["sec_code"];
-    $unlab_code=$_POST["lab_code"];
-    modifier($uneRef, $unNom, $unPrenom, $uneAdresse, $uneCP, $uneville, $unsec_code, $unlab_code,$tabErreurs);
+
+    modifier($uneRef, $unNom, $unPrenom, $uneAdresse, $uneCP, $uneville,$tabErreurs);
     // Message de r�ussite pour l'affichage
     if (nbErreurs($tabErreurs)==0)
     {
       $reussite = 1;
-      $messageActionOk = "La fleur a �t� correctement modifi�e";
+      $messageActionOk = "Le visiteur a �t� correctement modifi�e";
     }
   
 }

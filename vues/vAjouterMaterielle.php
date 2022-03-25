@@ -15,8 +15,8 @@
 
 <form name="formAjout" action="" method="post">
   <fieldset>
-    <legend>Entrez les donnees sur la fleur à ajouter </legend>
-    <label> Id : </label> <input type="text" placeholder="Entrer la reference à"name="ref" size="10" /><br />
+    <legend>Entrez les donnees sur le materiel à ajouter </legend>
+    <label> Id : </label> <input type="text" placeholder="Entrer l'id à"name="ref" size="10" /><br />
     <label>Marque :</label> <input type="text" name="marque" size="20" /><br />
     <label>Dimension:</label> <input type="text" name="dimension" size="10" /><br />
     <label>Modele:</label> <input type="text" name="modele" size="10" /><br />
