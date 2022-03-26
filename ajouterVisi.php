@@ -34,9 +34,8 @@ else
   $unPrenom=$_POST["VIS_PRENOM"];
   $unMdp=$_POST["mdp"];
   $unMdp1=$_POST["mdp1"];
-  $unRole=$_POST["role"];
   $unMail=$_POST["adresseMail"];
-  ajouterVisi2($unId, $unNom, $unPrenom, $unMdp, $unMdp1, $unRole, $unMail, $tabErreurs);
+  ajouterVisi2($unId, $unNom, $unPrenom, $unMdp, $unMdp1, $unMail, $tabErreurs);
 }
 
 // D�but de l'affichage (les vues)

@@ -29,7 +29,7 @@ function lister()
 {
     $connexion = connecterServeurBD();
    
-    $requete="select vis_matricule, vis_nom, vis_prenom, vis_adresse, vis_cp, vis_ville from visiteur";
+    $requete="select vis_matricule, vis_nom, vis_prenom, vis_adresse, vis_cp, vis_ville from visiteur where role='visiteur'";
     
     $jeuResultat=$connexion->query($requete); // on va chercher tous les membres de la table qu'on trie par ordre croissant
   
@@ -106,7 +106,7 @@ function ajouterMaterielle($ref, $marque, $dimension, $modele,&$tabErr)
 
 }
                                                                   
-function ajouterVisi2($id, $nom, $prenom, $mdp, $mdp1, $role, $mail, &$tabErr)
+function ajouterVisi2($id, $nom, $prenom, $mdp, $mdp1, $mail, &$tabErr)
 {
   // Ouvrir une connexion au serveur mysql en s'identifiant
 
@@ -126,8 +126,7 @@ function ajouterVisi2($id, $nom, $prenom, $mdp, $mdp1, $role, $mail, &$tabErr)
     .$nom."','"
     .$prenom."','"
     .$mdp."','"
-    .$mdp1."','"
-    .$role."','"
+    .$mdp1."','visiteur','"
     .$mail."');";
 
    

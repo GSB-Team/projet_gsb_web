@@ -21,7 +21,6 @@
     <label>Nom :</label> <input type="text" name="VIS_PRENOM" size="20" /><br />
     <label>Mot de Pass:</label> <input type="password" name="mdp" size="10" /><br />
     <label>Mot de Pass1:</label> <input type="password" name="mdp1" size="10" /><br />
-    <label>Rôle:</label> <input type="text" name="role" size="10" /><br />
     <label>Mail:</label> <input type="text" name="adresseMail" size="50" /><br />
        
    
