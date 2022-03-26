@@ -95,12 +95,12 @@ function ajouterMaterielle($ref, $marque, $dimension, $modele,&$tabErr)
   // Si la requ�te a r�ussi
   if ($ok)
   {
-    $message = "Le materiel a �t� correctement ajout�e";
+    $message = "Le materiel a ete correctement ajoutee";
     ajouterErreur($tabErr, $message);
     }
   else
   {
-    $message = "Attention, l'ajout du materiel a �chou� !!!";
+    $message = "Attention, l'ajout du materiel a echoue !!!";
     ajouterErreur($tabErr, $message);
   } 
 
@@ -142,12 +142,12 @@ function ajouterVisi2($id, $nom, $prenom, $mdp, $mdp1, $mail, &$tabErr)
     $requete="select `VIS_MATRICULE`, `VIS_NOM`,`VIS_PRENOM`,`mdp`, `mdp1`, `role`, `adresseMail` from visiteur";
   $requete=$requete." where `adresseMail` like '%@%' and `mdp`= `mdp1`;";   
         $ok=$connexion->query($requete);
-        $message = "L'utilisateur a �t� correctement ajout�e";
+        $message = "L'utilisateur a ete correctement ajoutee";
         ajouterErreur($tabErr, $message);
     }}
     else{
      
-        $message = "Attention, l'ajout de l'utilisateur a �chou� !!!";
+        $message = "Attention, l'ajout de l'utilisateur a echoue !!!";
         ajouterErreur($tabErr, $message);
       
     }
@@ -196,12 +196,12 @@ function inscription1($id, $nom, $prenom, $adresse, $cp, $ville, $mail, $role, $
     $requete="select `VIS_MATRICULE`, `VIS_NOM`,`VIS_PRENOM`, `VIS_ADRESSE`, `VIS_CP`, `VIS_VILLE`,`adresseMail`, `role`, `mdp`, `mdp1` from visiteur";
     $requete=$requete." where `adresseMail` like '%@%' and `mdp`= `mdp1`;";    
         $ok=$connexion->query($requete);
-        $message = "L'utilisateur a �t� correctement ajout�e";
+        $message = "L'utilisateur a ete correctement ajoutee";
         ajouterErreur($tabErr, $message);
     }}
     else{
      
-        $message = "Attention, l'ajout de l'utilisateur a �chou� !!!";
+        $message = "Attention, l'ajout de l'utilisateur a echoue !!!";
         ajouterErreur($tabErr, $message);
       
     }
@@ -280,12 +280,12 @@ function supprimer($ref, &$tabErr)
     // Si la requ�te a r�ussi
     if ($ok)
     {
-      $message = "Le visiteur a �t� correctement supprim�e";
+      $message = "Le visiteur a ete correctement supprimee";
       ajouterErreur($tabErr, $message);
     }
     else
     {
-      $message = "Attention, la suppression du visiteur a �chou� !!!";
+      $message = "Attention, la suppression du visiteur a echoue !!!";
       ajouterErreur($tabErr, $message);
     }      
 }
@@ -305,12 +305,12 @@ function supprimerMaterielle($ref, &$tabErr)
     // Si la requ�te a r�ussi
     if ($ok)
     {
-      $message = "Le materiel a �t� correctement supprim�e";
+      $message = "Le materiel a ete correctement supprimee";
       ajouterErreur($tabErr, $message);
     }
     else
     {
-      $message = "Attention, la suppression du materiel a �chou� !!!";
+      $message = "Attention, la suppression du materiel a echoue !!!";
       ajouterErreur($tabErr, $message);
     }      
 }
@@ -347,12 +347,12 @@ function modifier($ref, $nom, $prenom, $adresse, $cp, $ville,&$tabErr)
     // Si la requ�te a r�ussi
     if ($ok)
     {
-      $message = "Le visiteur a �t� correctement modifi�";
+      $message = "Le visiteur a ete correctement modifie";
       ajouterErreur($tabErr, $message);
     }
     else
     {
-      $message = "Attention, la modification du visiteur a �chou� !!!";
+      $message = "Attention, la modification du visiteur a echoue !!!";
       ajouterErreur($tabErr, $message);
     } 
 }
@@ -385,12 +385,12 @@ function modifierMaterielle($ref, $marque, $dimension, $modele,&$tabErr)
     // Si la requ�te a r�ussi
     if ($ok)
     {
-      $message = "Le materiel a �t� correctement modifi�";
+      $message = "Le materiel a ete correctement modifie";
       ajouterErreur($tabErr, $message);
     }
     else
     {
-      $message = "Attention, la modification du materiel a �chou� !!!";
+      $message = "Attention, la modification du materiel a echoue !!!";
       ajouterErreur($tabErr, $message);
     } 
 }
@@ -489,12 +489,12 @@ function ajouterEmprunt($dateEmprunter, $vis_matricule, $idMateriel,&$tabErr)
         .$idMateriel."');";
         $ok=$connexion->query($requete);
         
-        $message = "L'emprunt a �t� correctement ajout�e";
+        $message = "L'emprunt a ete correctement ajoutee";
         ajouterErreur($tabErr, $message);
     }
   else
   {
-    $message = "Attention, l'ajout de l'emprunt a �chou� !!!";
+    $message = "Attention, l'ajout de l'emprunt a echoue !!!";
     ajouterErreur($tabErr, $message);
   } 
 
@@ -519,12 +519,12 @@ function ajouterRestituer( $dateRestituer, $vis_matricule, $idMateriel,&$tabErr)
   // Si la requ�te a r�ussi
   if ($ok>=1)
   {
-    $message = "Le matériel a �t� correctement restituer";
+    $message = "Le matériel a ete correctement restituer";
     ajouterErreur($tabErr, $message);
     }
   else
   {
-    $message = "Attention, la réstitution de l'emprunt a �chou� !!!";
+    $message = "Attention, la réstitution de l'emprunt a echoue !!!";
     ajouterErreur($tabErr, $message);
   } 
 
