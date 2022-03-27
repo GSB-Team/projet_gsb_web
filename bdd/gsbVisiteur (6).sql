@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le : ven. 25 mars 2022 à 12:40
+-- Généré le : Dim 27 mars 2022 à 17:22
 -- Version du serveur :  5.7.32
 -- Version de PHP : 7.4.12
 
@@ -103,14 +103,6 @@ CREATE TABLE `visiteur` (
 --
 
 INSERT INTO `visiteur` (`VIS_MATRICULE`, `VIS_NOM`, `VIS_PRENOM`, `VIS_ADRESSE`, `VIS_CP`, `VIS_VILLE`, `mdp`, `adresseMail`, `role`, `mdp1`) VALUES
-('55', 'noa', 's', NULL, NULL, NULL, '123AA', 'noa@gmail.com', 'admin', '123AA'),
-('56', 'S', 'Noa', '31 rue Hoche', '93500', 'Pantin', '123AAA', 'noa1@gmail.com', 'visiteur', '123AAA'),
-('57', 'Noa2', 's', NULL, NULL, NULL, '123AAAA', 'noa2@gmail.com', 'visiteur', '123AAAA'),
-('59', 'AAA', 'AA', '1 RUE HOCHE', '93200', 'MONTREUIL', '12', 'AA@gmail.com', 'visiteur', '12'),
-('60', 'AZERTY', 'AZ', '1 RUE HOCHE', '93200', 'MONTREUIL', 'az', 'AZ@gmail.com', 'visiteur', 'az'),
-('61', 'AAA', 'AA', '1 RUE HOCHE', '93200', 'MONTREUIL', 'AA', 'AA@gmail.com', 'visiteur', 'AA'),
-('64', 'ZZ', 'ZZ', 'A RUE ZZ', '93200', 'Montreuil', 'ZZ', 'ZZ@gmail.com', 'visiteur', 'ZZ'),
-('78', 'AAA', 'AA', '1 RUE HOCHE', '93200', 'MONTREUIL', 'AA', 'AA@gmail.com', 'visiteur', 'AA'),
 ('a17', 'Andre', 'David', '3 r Aimon de Chiss', '38100', 'Grenoble', '12334', 'andredavid@gmail.com', 'visiteur', '1234'),
 ('a55', 'Bedos', 'Christian', '1 r B', '65000', 'TARBES', '11111', 'bedoschristian@gmail.com', 'visiteur', '11111'),
 ('a93', 'Tusseau', 'Louis', '22 r Renou', '86000', 'POITIERS', '12345UG5I', 'tusseaulouis@gmail.com', 'visiteur', '12345UG5I'),
