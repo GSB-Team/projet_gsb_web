@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le : Dim 27 mars 2022 à 17:22
+-- Généré le : lun. 28 mars 2022 à 08:45
 -- Version du serveur :  5.7.32
 -- Version de PHP : 7.4.12
 
@@ -103,7 +103,7 @@ CREATE TABLE `visiteur` (
 --
 
 INSERT INTO `visiteur` (`VIS_MATRICULE`, `VIS_NOM`, `VIS_PRENOM`, `VIS_ADRESSE`, `VIS_CP`, `VIS_VILLE`, `mdp`, `adresseMail`, `role`, `mdp1`) VALUES
-('a17', 'Andre', 'David', '3 r Aimon de Chiss', '38100', 'Grenoble', '12334', 'andredavid@gmail.com', 'visiteur', '1234'),
+('a17', 'Andre', 'David', '3 r Aimon de Chiss', '38100', 'Grenoble', '1234', 'andredavid@gmail.com', 'visiteur', '1234'),
 ('a55', 'Bedos', 'Christian', '1 r B', '65000', 'TARBES', '11111', 'bedoschristian@gmail.com', 'visiteur', '11111'),
 ('a93', 'Tusseau', 'Louis', '22 r Renou', '86000', 'POITIERS', '12345UG5I', 'tusseaulouis@gmail.com', 'visiteur', '12345UG5I'),
 ('b13', 'Bentot', 'Pascal', '11 av 6 Juin', '67000', 'STRASBOURG', 'qsdfghhj', 'bentotpascal@gmail.com', 'admin', 'qsdfghhj'),
