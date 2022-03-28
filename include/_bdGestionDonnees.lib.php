@@ -15,10 +15,12 @@
 function connecterServeurBD() 
 {
     $PARAM_hote='localhost'; // le chemin vers le serveur
-    $PARAM_port='8889';
-    $PARAM_nom_bd='gsbVisiteur'; // le nom de votre base de donn�es
+    // Noa : change le port vers "8809"
+    // Noa : change le mot de passe vers "root"
+    $PARAM_port='3306';
+    $PARAM_nom_bd='gsbvisiteur'; // le nom de votre base de donn�es
     $PARAM_utilisateur='root'; // nom d'utilisateur pour se connecter
-    $PARAM_mot_passe='root'; // mot de passe de l'utilisateur pour se connecter
+    $PARAM_mot_passe=''; // mot de passe de l'utilisateur pour se connecter
 
     $connect = new PDO('mysql:host='.$PARAM_hote.';port='.$PARAM_port.';dbname='.$PARAM_nom_bd, $PARAM_utilisateur, $PARAM_mot_passe);
  
